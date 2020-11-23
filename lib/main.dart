@@ -427,7 +427,7 @@ class _MyAppState extends State<InputData> {
           controller: kelasController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "Nomor Induk Mahasiswa",
+            labelText: "Kelas Mahasiswa",
           ),
           onChanged: (text) {
             setState(() {
@@ -445,7 +445,7 @@ Widget _inputkdmatkul() {
           controller: kdmatkulController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "Nomor Induk Mahasiswa",
+            labelText: "Kode Mata Kuliah",
           ),
           onChanged: (text) {
             setState(() {
@@ -463,7 +463,7 @@ Widget _inputEmail() {
           controller: emailController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "Nomor Induk Mahasiswa",
+            labelText: "Email Mahasiswa",
           ),
           onChanged: (text) {
             setState(() {
@@ -505,7 +505,7 @@ Widget _submit() {
           );
           }
           else
-          {saveData(context,nimMHS,fullName,kelas,kdmatkul,email );}  ///end if
+          {saveData(context,nimMHS,fullName,kelas,kdmatkul,email );Navigator.pushNamed(context, '/');}  ///end if
         },
         child: Text('Submit'),
       ),
