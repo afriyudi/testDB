@@ -525,6 +525,9 @@ Widget _submit() {
               child: Column(children: <Widget>[
                 _inputNIM(),
             _inputFullName(),
+            _inputKelas(),
+            _inputkdmatkul(),
+            _inputEmail(),
                 _submit(),
             
             Container(
