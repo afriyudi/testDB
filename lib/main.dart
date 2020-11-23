@@ -316,22 +316,74 @@ class MyButton extends StatelessWidget {
   }
 }
 
+
+Future saveData(BuildContext context,String nim,String nama,String kelas,String kdmatkul,String email) async{
+
+    // Showing CircularProgressIndicator using State.
+    
+
+    // Getting value from Controller
+    
+    // API URL
+    var url = 'https://testflutterku.000webhostapp.com/saveData.php';
+
+    // Store all data with Param Name.
+    var data = {'nim':nim,'nama': nama,'kelas':kelas,'kdmatkul':kdmatkul, 'email': email};
+
+    // Starting Web Call with data.
+    var response = await http.post(url, body: json.encode(data));
+
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+
+    // If Web call Success than Hide the CircularProgressIndicator.
+    if(response.statusCode == 200){
+      
+    }
+   
+    // Showing Alert Dialog with Response JSON.
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+  }
+
 class InputData extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<InputData> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController namaController = TextEditingController();
   TextEditingController nimController = TextEditingController();
+  TextEditingController kelasController = TextEditingController();
+  TextEditingController kdmatkulController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  
   String nimMHS = '';
   String fullName = '';
-
+  String kelas = '';
+  String kdmatkul = '';
+  String email = '';
+  
   Widget _inputFullName() {
     return Container(
         margin: EdgeInsets.all(20),
         child: TextField(
-          controller: nameController,
+          controller: namaController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: "Full Name",
@@ -367,6 +419,61 @@ class _MyAppState extends State<InputData> {
         ));
   }
 
+
+ Widget _inputKelas() {
+    return Container(
+        margin: EdgeInsets.all(20),
+        child: TextField(
+          controller: kelasController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Nomor Induk Mahasiswa",
+          ),
+          onChanged: (text) {
+            setState(() {
+              kelas = text;
+             
+            });
+          },
+        ));
+  }
+
+Widget _inputkdmatkul() {
+    return Container(
+        margin: EdgeInsets.all(20),
+        child: TextField(
+          controller: kdmatkulController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Nomor Induk Mahasiswa",
+          ),
+          onChanged: (text) {
+            setState(() {
+              kdmatkul = text;
+             
+            });
+          },
+        ));
+  }
+
+Widget _inputEmail() {
+    return Container(
+        margin: EdgeInsets.all(20),
+        child: TextField(
+          controller: emailController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Nomor Induk Mahasiswa",
+          ),
+          onChanged: (text) {
+            setState(() {
+              email = text;
+             
+            });
+          },
+        ));
+  }
+
 Widget _submit() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -396,7 +503,9 @@ Widget _submit() {
               );
             },
           );
-          }  ///end if
+          }
+          else
+          {saveData(context,nimMHS,fullName,kelas,kdmatkul,email );}  ///end if
         },
         child: Text('Submit'),
       ),
