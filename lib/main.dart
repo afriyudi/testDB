@@ -336,10 +336,28 @@ Future saveData(BuildContext context,String nim,String nama,String kelas,String 
     // Getting Server response into variable.
     var message = jsonDecode(response.body);
 
-    // If Web call Success than Hide the CircularProgressIndicator.
+    
     if(response.statusCode == 200){
-      
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+     Navigator.pushNamed(context, '/');  //keluar
+  
     }
+    else
    
     // Showing Alert Dialog with Response JSON.
     showDialog(
@@ -358,7 +376,7 @@ Future saveData(BuildContext context,String nim,String nama,String kelas,String 
         );
       },
     );
-
+     
   }
 
 class InputData extends StatefulWidget {
@@ -505,7 +523,7 @@ Widget _submit() {
           );
           }
           else
-          {saveData(context,nimMHS,fullName,kelas,kdmatkul,email );Navigator.pushNamed(context, '/');}  ///end if
+          {saveData(context,nimMHS,fullName,kelas,kdmatkul,email );}  ///end if
         },
         child: Text('Submit'),
       ),
