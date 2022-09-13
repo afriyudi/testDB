@@ -47,7 +47,7 @@ class TutorialHome extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 //map List of our data to the ListView
                 children: _listViewData
-                    .map((data) => new FlatButton(
+                    .map((data) =>  TextButton(
                           child: new Text(data),
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -57,7 +57,7 @@ class TutorialHome extends StatelessWidget {
               ),
             ),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 child: new Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -82,7 +82,7 @@ class TutorialHome extends StatelessWidget {
       ],
       elevation: 8.0,
     )
-    .then<void>((String itemSelected) {
+    .then<void>((String? itemSelected) {
 
       if (itemSelected == null) return;
 
@@ -109,7 +109,7 @@ class TutorialHome extends StatelessWidget {
         PopupMenuItem<String>(child: const Text('mata kuliah'), value: '4'),
       ],
       elevation: 8.0,
-    ).then<void>((String itemSelected) {
+    ).then<void>((String? itemSelected) {
       if (itemSelected == null) return;
 
       if (itemSelected == "1") {
@@ -284,7 +284,7 @@ class MyButton extends StatelessWidget {
               title: _about(),
               content: gambar(),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('Close me!'),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -386,7 +386,7 @@ Widget _submit() {
                 title: const Text('Thanks!'),
                 content: Text('nim atau nama tidak boleh kosong'),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -438,7 +438,7 @@ class User {
   String firstName;
   String lastName;
 
-  User({this.firstName, this.lastName});
+  User({required this.firstName, required this.lastName});
 
   static List<User> getUsers() {
     return <User>[
@@ -462,9 +462,9 @@ class DataTableDemo extends StatefulWidget {
 }
 
 class DataTableDemoState extends State<DataTableDemo> {
-  List<User> users;
-  List<User> selectedUsers;
-  bool sort;
+  late List<User> users;
+  late List<User> selectedUsers;
+  late bool sort;
 
   @override
   void initState() {
@@ -536,7 +536,7 @@ class DataTableDemoState extends State<DataTableDemo> {
                   selected: selectedUsers.contains(user),
                   onSelectChanged: (b) {
                     print("Onselect");
-                    onSelectedRow(b, user);
+                    onSelectedRow(b ?? false, user);
                   },
                   cells: [
                     DataCell(
@@ -575,14 +575,14 @@ class DataTableDemoState extends State<DataTableDemo> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(20.0),
-                child: OutlineButton(
+                child: OutlinedButton(
                   child: Text('SELECTED ${selectedUsers.length}'),
                   onPressed: () {},
                 ),
               ),
               Padding(
                 padding: EdgeInsets.all(20.0),
-                child: OutlineButton(
+                child: OutlinedButton(
                   child: Text('DELETE SELECTED'),
                   onPressed: selectedUsers.isEmpty
                       ? null
@@ -602,7 +602,7 @@ class DataTableDemoState extends State<DataTableDemo> {
 //==================================
 Future<Album> fetchAlbum() async {
   final response =
-      await http.get('https://testflutterku.000webhostapp.com/onejson.php');
+      await http.get(Uri.parse('https://testflutterku.000webhostapp.com/onejson.php'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -620,7 +620,7 @@ class Album {
   final int id;
   final String title;
 
-  Album({this.userId, this.id, this.title});
+  Album({required this.userId, required this.id, required this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
@@ -634,14 +634,14 @@ class Album {
 
 
 class MyApp1 extends StatefulWidget {
-  MyApp1({Key key}) : super(key: key);
+  MyApp1({Key? key}) : super(key: key);
 
   @override
   _MyAppState1 createState() => _MyAppState1();
 }
 
 class _MyAppState1 extends State<MyApp1> {
-  Future<Album> futureAlbum;
+  late Future<Album> futureAlbum;
 
   @override
   void initState() {
@@ -665,7 +665,7 @@ class _MyAppState1 extends State<MyApp1> {
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.title);
+                return Text(snapshot.data!.title);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
